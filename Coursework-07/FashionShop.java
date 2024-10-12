@@ -567,7 +567,7 @@ System.out.println();
 		
 		switch(choice2){
 			case 1:
-				//allOrders();
+				allOrdersByOrderId();
 			break;
 			}
 			break;
@@ -957,6 +957,51 @@ private static String getSizeString(int index) {
 		sortItemsByAmount();
 		}
 }
+
+public static void allOrdersByOrderId() {
+    // Create an array to store the order data, including formatted order ID, customer ID, size, quantity, and amount
+    int numOrders = orders.length; // Assuming orderIds array holds the order IDs
+    String[][] orderData = new String[numOrders][5]; // 5 columns: Order ID, Customer ID, Size, Qty, Amount
+
+    // Populate the array with order data
+    for (int i = 0; i < numOrders; i++) {
+        orderData[i][0] = createOrderString(orders[i]); // Formatted Order ID
+        orderData[i][1] = customers[i]; // Customer ID
+        orderData[i][2] = tsizes[i]; // Size
+        orderData[i][3] = String.valueOf(qty[i]); // Qty
+        orderData[i][4] = String.format("%.2f", calculateAmount(tsizes[i], qty[i])); // Amount
+    }
+
+    // Sort the order data by Order ID in descending order using bubble sort
+    for (int i = 0; i < numOrders - 1; i++) {
+        for (int j = 0; j < numOrders - i - 1; j++) {
+            if (Integer.parseInt(orderData[j][0].substring(4)) < Integer.parseInt(orderData[j + 1][0].substring(4))) {
+                // Swap the rows if current order ID is smaller than the next one
+                String[] temp = orderData[j];
+                orderData[j] = orderData[j + 1];
+                orderData[j + 1] = temp;
+            }
+        }
+    }
+
+    // Print table header
+    System.out.println("_________________________________________________________________________________________");
+    System.out.printf("%-10s %-15s %-10s %-10s %-10s%n", "Order ID", "Customer ID", "Size", "Qty", "Amount");
+    System.out.println("-----------------------------------------------------------------------------------------");
+
+    // Display the sorted order data
+    for (int i = 0; i < numOrders; i++) {
+        System.out.printf("%-10s %-15s %-10s %-10s %-10s%n", 
+            orderData[i][0], // Formatted Order ID
+            orderData[i][1], // Customer ID
+            orderData[i][2], // Size
+            orderData[i][3], // Quantity
+            orderData[i][4]  // Amount
+        );
+    }
+}
+
+
 
 
 

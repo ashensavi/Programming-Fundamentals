@@ -521,7 +521,56 @@ System.out.println();
 			break;
 			}
 		break;
-				
+		  case 2:
+			clearConsole();
+		System.out.println("____________________________________________________________________________________________________________________");
+		System.out.println();
+		System.out.println();
+		System.out.printf("%67s","[1] Best Selling Categories Sorted by QTY\n");
+		System.out.println();
+		System.out.printf("%70s","[2] Best Selling Categories Sorted by Amount\n");
+	
+
+		
+		System.out.println();
+		System.out.println();
+		System.out.print("Input Option :");
+		
+		int choice1 = input.nextInt();
+		
+		switch(choice1){
+			case 1:
+				sortItemsByQty();
+			break;
+			
+			case 2:
+				sortItemsByAmount();
+			break;
+			}
+			break;
+			case 3:
+		clearConsole();
+		System.out.println("____________________________________________________________________________________________________________________");
+		System.out.println();
+		System.out.println();
+		System.out.printf("%67s","[1] All Orders\n");
+		System.out.println();
+		System.out.printf("%70s","[2] Orders by Amount\n");
+	
+
+		
+		System.out.println();
+		System.out.println();
+		System.out.print("Input Option :");
+		
+		int choice2 = input.nextInt();
+		
+		switch(choice2){
+			case 1:
+				//allOrders();
+			break;
+			}
+			break;
 			}
 		}
 
@@ -738,10 +787,15 @@ public static String[][] getBestCustomerData() {
     }
 
     System.out.println();
-    boolean choice = yesNoChoice("Do you want to go to the main menu? (y/n)");
-    if (choice) {
+   System.out.print("To access the main menu, please enter 0 : ");
+   int choice = input.nextInt();
+    if (choice==0) {
+		clearConsole();
         homePage();
-    }
+    }else{
+		System.out.println("Invalid input..Please enter again!");
+		viewCustomerDataBySize();
+		}
 }
 
 	private static int getSizeIndex(String size) {
@@ -781,6 +835,129 @@ private static String getSizeString(int index) {
             return ""; // Should not reach here
     }
 }
+
+	public static void sortItemsByQty() {
+    // Array to store total quantities by size (XS, S, M, L, XL, XXL)
+    int[] totalQtyBySize = new int[6];
+    double[] totalAmountBySize = new double[6];
+
+    // Iterate through each customer and accumulate quantities and amounts by size
+    for (int i = 0; i < customers.length; i++) {
+        int sizeIndex = getSizeIndex(tsizes[i]);
+        if (sizeIndex != -1) {
+            totalQtyBySize[sizeIndex] += qty[i]; // Accumulate quantity for this size
+            totalAmountBySize[sizeIndex] += calculateAmount(tsizes[i], qty[i]); // Accumulate total amount for this size
+        }
+    }
+
+    // Sort by quantity (descending order)
+    for (int i = 0; i < totalQtyBySize.length - 1; i++) {
+        for (int j = 0; j < totalQtyBySize.length - i - 1; j++) {
+            if (totalQtyBySize[j] < totalQtyBySize[j + 1]) {
+                // Swap quantities
+                int tempQty = totalQtyBySize[j];
+                totalQtyBySize[j] = totalQtyBySize[j + 1];
+                totalQtyBySize[j + 1] = tempQty;
+
+                // Swap amounts
+                double tempAmount = totalAmountBySize[j];
+                totalAmountBySize[j] = totalAmountBySize[j + 1];
+                totalAmountBySize[j + 1] = tempAmount;
+            }
+        }
+    }
+
+    // Print table header
+    System.out.println("Sizes sorted by total quantity:");
+    System.out.println("_________________________________________________________________________________________");
+    System.out.println();
+    System.out.printf("%-10s %-10s %-10s%n", "Size", "Qty", "Total Amount");
+    System.out.println("-----------------------------------------------------------------------------------------");
+
+    // Display data for each size
+    for (int i = 0; i < totalQtyBySize.length; i++) {
+        if (totalQtyBySize[i] > 0) { // Only show sizes with quantities
+            System.out.printf("%-10s %-10d %-10.2f%n", 
+                getSizeString(i), // Size (XS, S, M, L, XL, XXL)
+                totalQtyBySize[i], // Total quantity for this size
+                totalAmountBySize[i] // Total amount for this size
+            );
+        }
+    }
+	 System.out.println();
+   System.out.print("To access the main menu, please enter 0 : ");
+   int choice = input.nextInt();
+    if (choice==0) {
+		clearConsole();
+        homePage();
+    }else{
+		System.out.println("Invalid input..Please enter again!");
+		sortItemsByQty();
+		}
+}
+
+	
+	
+	public static void sortItemsByAmount() {
+    // Array to store total quantities by size (XS, S, M, L, XL, XXL)
+    int[] totalQtyBySize = new int[6];
+    double[] totalAmountBySize = new double[6];
+
+    // Iterate through each customer and accumulate quantities and amounts by size
+    for (int i = 0; i < customers.length; i++) {
+        int sizeIndex = getSizeIndex(tsizes[i]);
+        if (sizeIndex != -1) {
+            totalQtyBySize[sizeIndex] += qty[i]; // Accumulate quantity for this size
+            totalAmountBySize[sizeIndex] += calculateAmount(tsizes[i], qty[i]); // Accumulate total amount for this size
+        }
+    }
+
+    // Sort by total amount (descending order)
+    for (int i = 0; i < totalAmountBySize.length - 1; i++) {
+        for (int j = 0; j < totalAmountBySize.length - i - 1; j++) {
+            if (totalAmountBySize[j] < totalAmountBySize[j + 1]) {
+                // Swap amounts
+                double tempAmount = totalAmountBySize[j];
+                totalAmountBySize[j] = totalAmountBySize[j + 1];
+                totalAmountBySize[j + 1] = tempAmount;
+
+                // Swap quantities accordingly
+                int tempQty = totalQtyBySize[j];
+                totalQtyBySize[j] = totalQtyBySize[j + 1];
+                totalQtyBySize[j + 1] = tempQty;
+            }
+        }
+    }
+
+    // Print table header
+    System.out.println("Sizes sorted by total amount:");
+    System.out.println("_________________________________________________________________________________________");
+    System.out.println();
+    System.out.printf("%-10s %-10s %-10s%n", "Size", "Qty", "Total Amount");
+    System.out.println("-----------------------------------------------------------------------------------------");
+
+    // Display data for each size
+    for (int i = 0; i < totalAmountBySize.length; i++) {
+        if (totalQtyBySize[i] > 0) { // Only show sizes with quantities
+            System.out.printf("%-10s %-10d %-10.2f%n", 
+                getSizeString(i), // Size (XS, S, M, L, XL, XXL)
+                totalQtyBySize[i], // Total quantity for this size
+                totalAmountBySize[i] // Total amount for this size
+            );
+        }
+    }
+    System.out.println();
+   System.out.print("To access the main menu, please enter 0 : ");
+   int choice = input.nextInt();
+    if (choice==0) {
+		clearConsole();
+        homePage();
+    }else{
+		System.out.println("Invalid input..Please enter again!");
+		sortItemsByAmount();
+		}
+}
+
 
 
 

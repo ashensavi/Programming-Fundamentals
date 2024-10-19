@@ -209,14 +209,14 @@ public class FashionShop {
     public static void placeOrder() {
  
         clearConsole();
-		System.out.println("         _____  _                   ____          _");           
-		System.out.println(" |  __ \\| |                 / __ \\        | |");          
-		System.out.println(" | |__) | | __ _  ___ ___  | |  | |_ __ __| | ___ _ __"); 
-		System.out.println(" |  ___/| |/ _` |/ __/ _ \\ | |  | | '__/ _` |/ _ \\ '__|");
-		System.out.println(" | |    | | (_| | (_|  __/ | |__| | | | (_| |  __/ |");   
-		System.out.println(" |_|    |_|\\__,_|\\___\\___|  \\____/|_|  \\__,_|\\___|_|"); 
-		System.out.println();
-		System.out.println();  
+System.out.println("         _____  _                   ____          _");           
+System.out.println(" |  __ \\| |                 / __ \\        | |");          
+System.out.println(" | |__) | | __ _  ___ ___  | |  | |_ __ __| | ___ _ __"); 
+System.out.println(" |  ___/| |/ _` |/ __/ _ \\ | |  | | '__/ _` |/ _ \\ '__|");
+System.out.println(" | |    | | (_| | (_|  __/ | |__| | | | (_| |  __/ |");   
+System.out.println(" |_|    |_|\\__,_|\\___\\___|  \\____/|_|  \\__,_|\\___|_|"); 
+System.out.println();
+System.out.println();  
 
         System.out.println("Order ID : " + createOrderString(orders.length+1));
 
@@ -256,12 +256,12 @@ public class FashionShop {
     
     public static void searchCustomer(){
 		clearConsole();
-		System.out.println("		   _____                     _        _____          _");                            
-		System.out.println("  / ____|                   | |      / ____|        | |");                           
-		System.out.println(" | (___   ___  __ _ _ __ ___| |__   | |    _   _ ___| |_ ___  _ __ ___   ___ _ __"); 
-		System.out.println("  \\___ \\ / _ \\/ _` | '__/ __| '_ \\  | |   | | | / __| __/ _ \\| '_ ` _ \\ / _ \\ '__|");
-		System.out.println("  ____) |  __/ (_| | | | (__| | | | | |___| |_| \\__ \\ || (_) | | | | | |  __/ |");   
-		System.out.println(" |_____/ \\___|\\__,_|_|  \\___|_| |_|  \\_____\\__,_|___/\\__\\___/|_| |_| |_|\\___|_|"); 
+System.out.println("		   _____                     _        _____          _");                            
+System.out.println("  / ____|                   | |      / ____|        | |");                           
+System.out.println(" | (___   ___  __ _ _ __ ___| |__   | |    _   _ ___| |_ ___  _ __ ___   ___ _ __"); 
+System.out.println("  \\___ \\ / _ \\/ _` | '__/ __| '_ \\  | |   | | | / __| __/ _ \\| '_ ` _ \\ / _ \\ '__|");
+System.out.println("  ____) |  __/ (_| | | | (__| | | | | |___| |_| \\__ \\ || (_) | | | | | |  __/ |");   
+System.out.println(" |_____/ \\___|\\__,_|_|  \\___|_| |_|  \\_____\\__,_|___/\\__\\___/|_| |_| |_|\\___|_|"); 
 
 System.out.println();  
 System.out.println();  

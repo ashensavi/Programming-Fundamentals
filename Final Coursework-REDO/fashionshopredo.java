@@ -1,8 +1,27 @@
 import java.util.*;
 class fashionshopredo {
+    public static String[] orderIdArray = new String[0]; // using 0 as the number of elements becuase we dont know how many orders will be there
+    public static String[] phoneNumberArray = new String[0];
+    public static String[] sizeArray = new String[0];
+    public static int[] qtyArray = new int[0];
+    public static double[] AmountArray = new double[0];
+    public static int[] statusArray = new int[0];
+
     public static Scanner input = new Scanner(System.in);
     public static void main(String args[]){
         homePage();
+    }
+
+    //===========Generate Order Id====================
+    public static String generateId(){
+        int id1;
+        if (orderIdArray.length>0){
+            id1=Integer.parseInt(orderIdArray[orderIdArray.length-1].split("[#]")[1]);
+            id1++;
+        }else{
+            return "ODR#00001";
+        }
+        return String.format("ODR#%05d",id1);
     }
 
     public static void homePage(){
@@ -39,4 +58,38 @@ class fashionshopredo {
         }
 
     }
+    //=========PLACE ORDER=============
+    public static void placeOrder(){
+        do {
+            System.out.println("=============Place Order================");
+            System.out.println("\nEnter Order ID: ");
+        } while (true);
+    }
+
+
+    public static void searchCustomer(){
+
+    }
+
+
+    public static void searchOrder(){
+
+    }
+
+
+    public static void viewReports(){
+
+    }
+
+
+    public static void setOrderStatus(){
+
+    }
+
+
+    public static void deleteOrder(){
+
+    }
+
+
 }

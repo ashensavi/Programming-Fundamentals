@@ -6,6 +6,17 @@ class fashionshopredo {
     public static int[] qtyArray = new int[0];
     public static double[] AmountArray = new double[0];
     public static int[] statusArray = new int[0];
+    
+    public static final double XS = 600;
+    public static final double S = 800;
+    public static final double M = 900;
+    public static final double L = 1000;
+    public static final double XL = 1100;
+    public static final double XXL = 1200;
+
+    public static final int PROCCESSING = 0;
+    public static final int DELIVERING = 1;
+    public static final int DELIVERED = 2;
 
     public static Scanner input = new Scanner(System.in);
     public static void main(String args[]){
@@ -82,6 +93,13 @@ class fashionshopredo {
         }
         return false;
     }
+
+    public static boolean validateQty(int qty){
+        if(qty>0){
+            return true;
+        }
+        return false;
+    }
     //=========PLACE ORDER=============
     public static void placeOrder(){
         L1:do {
@@ -110,6 +128,57 @@ class fashionshopredo {
                     homePage();
                 }
             }while(true);
+
+            System.out.print("\nEnter T-Shirt Size(XS/S/M/L/XL/XXL): ");
+            String size = input.next();
+
+            int qty;
+            L3:do{
+                System.out.println("\nEnter QTY : ");
+                qty = input.nextInt();
+
+                boolean isValidQty = validateQty(qty);
+
+                if(isValidQty){
+                    break L3;
+                }
+                System.out.println("Invalid QTY!.Try Again...");
+                System.out.println("Do you want to enter qty again? (Y/N)");
+                char ch = input.next().charAt(0);
+                if(ch == 'y' || ch == 'Y'){
+                     // Move the cursor up five lines 
+                     System.out.print("\033[6A"); 
+                     // Clear the lines 
+                     System.out.print("\033[0J");
+                     continue L3;
+                }else if(ch == 'n' || ch == 'N'){
+                    clearConsole();
+                    homePage();
+                }
+            }while(true);
+
+            double amount = 0;
+            switch(size.toUpperCase()){
+                case "XS" :
+                    amount = XS * qty;
+                break;
+                case "S" :
+                    amount = S * qty;
+                break;
+                case "M" :
+                    amount = M * qty;
+                break;
+                case "L":
+                    amount = L * qty;
+                break;
+                case "XL":
+                    amount = XL * qty;
+                break;
+                case "XXL":
+                    amount = XXL * qty;
+                    break;
+            }
+            System.out.print("\nAmount : "+amount);
 
         } while (true);
     }

@@ -11,6 +11,23 @@ class fashionshopredo {
     public static void main(String args[]){
         homePage();
     }
+    
+    
+    public final static void clearConsole() {  
+        try { 
+              final String os = System.getProperty("os.name");  
+              if (os.contains("Windows")) { 
+                  new ProcessBuilder("cmd", "/c", 
+   "cls").inheritIO().start().waitFor(); 
+              } else { 
+                   System.out.print("\033[H\033[2J");  
+                   System.out.flush(); 
+                 } 
+          } catch (final Exception e) { 
+               e.printStackTrace(); 
+               // Handle any exceptions. 
+           } 
+      } 
 
     //===========Generate Order Id====================
     public static String generateId(){
@@ -58,11 +75,42 @@ class fashionshopredo {
         }
 
     }
+
+    public static boolean  validatePhoneNumber(String phoneNumber){
+        if (phoneNumber.length()==10 && phoneNumber.charAt(0)=='0') {
+            return true;
+        }
+        return false;
+    }
     //=========PLACE ORDER=============
     public static void placeOrder(){
-        do {
+        L1:do {
             System.out.println("=============Place Order================");
             System.out.println("\nEnter Order ID: ");
+
+           L2: do{
+                System.out.print("\nEnter Customer Phone Number: ");
+                String phoneNumber = input.next();
+                boolean isValidPhoneNumber = validatePhoneNumber(phoneNumber);
+
+                if(isValidPhoneNumber){
+                    break L2;
+                }
+                System.out.println("Invalid Phone Number!...Try Again!");
+                System.out.println("Do you want to enter phone number again? (Y/N)");
+                char ch = input.next().charAt(0);
+                if(ch == 'y' || ch == 'Y'){
+                     // Move the cursor up five lines 
+                     System.out.print("\033[6A"); 
+                     // Clear the lines 
+                     System.out.print("\033[0J");
+                     continue L2;
+                }else if(ch == 'n' || ch == 'N'){
+                    clearConsole();
+                    homePage();
+                }
+            }while(true);
+
         } while (true);
     }
 

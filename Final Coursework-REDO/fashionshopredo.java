@@ -1,5 +1,6 @@
 import java.util.*;
 class fashionshopredo {
+    //Creating the arrays
     public static String[] orderIdArray = new String[0]; // using 0 as the number of elements becuase we dont know how many orders will be there
     public static String[] phoneNumberArray = new String[0];
     public static String[] sizeArray = new String[0];
@@ -7,6 +8,7 @@ class fashionshopredo {
     public static double[] AmountArray = new double[0];
     public static int[] statusArray = new int[0];
     
+    //Constants
     public static final double XS = 600;
     public static final double S = 800;
     public static final double M = 900;
@@ -100,22 +102,49 @@ class fashionshopredo {
         }
         return false;
     }
+
+    public static void extendArrays(){
+         //create temp arrays for size 1 more than orderIdArray length.
+        String[] tempOrderIdArray = new String[orderIdArray.length+1];
+        String[] tempPhoneNumberArray = new String[orderIdArray.length+1];
+        String[] tempSizeArray = new String[orderIdArray.length+1];
+        int[] tempQtyrArray = new int[orderIdArray.length+1];
+        double[] tempAmountArray = new double[orderIdArray.length+1];
+        int[] tempStatusArray = new int[orderIdArray.length+1];
+       
+        for(int i=0 ; i < orderIdArray.length; i++){
+            tempOrderIdArray[i] = orderIdArray[i];
+            tempPhoneNumberArray[i] = phoneNumberArray[i];
+            tempSizeArray[i] = sizeArray[i];
+            tempQtyrArray[i] = qtyArray[i];
+            tempAmountArray[i] = AmountArray[i];
+            tempStatusArray[i] = statusArray[i];
+        }
+        //Swapping the array reference
+        orderIdArray = tempOrderIdArray;
+        phoneNumberArray = tempPhoneNumberArray;
+        sizeArray = tempSizeArray;
+        qtyArray = tempQtyrArray;
+        AmountArray = tempAmountArray;
+        statusArray = tempStatusArray;
+    }
     //=========PLACE ORDER=============
     public static void placeOrder(){
         L1:do {
             System.out.println("=============Place Order================");
-            System.out.println("\nEnter Order ID: ");
-
+            String orderId = generateId();
+            System.out.println("\nEnter Order ID: "+orderId);
+           String phoneNumber;
            L2: do{
                 System.out.print("\nEnter Customer Phone Number: ");
-                String phoneNumber = input.next();
+                phoneNumber = input.next();
                 boolean isValidPhoneNumber = validatePhoneNumber(phoneNumber);
 
                 if(isValidPhoneNumber){
                     break L2;
                 }
                 System.out.println("Invalid Phone Number!...Try Again!");
-                System.out.println("Do you want to enter phone number again? (Y/N)");
+                System.out.print("Do you want to enter phone number again? (Y/N)");
                 char ch = input.next().charAt(0);
                 if(ch == 'y' || ch == 'Y'){
                      // Move the cursor up five lines 
@@ -134,7 +163,7 @@ class fashionshopredo {
 
             int qty;
             L3:do{
-                System.out.println("\nEnter QTY : ");
+                System.out.print("\nEnter QTY : ");
                 qty = input.nextInt();
 
                 boolean isValidQty = validateQty(qty);
@@ -143,7 +172,7 @@ class fashionshopredo {
                     break L3;
                 }
                 System.out.println("Invalid QTY!.Try Again...");
-                System.out.println("Do you want to enter qty again? (Y/N)");
+                System.out.print("Do you want to enter qty again? (Y/N)");
                 char ch = input.next().charAt(0);
                 if(ch == 'y' || ch == 'Y'){
                      // Move the cursor up five lines 
@@ -178,7 +207,32 @@ class fashionshopredo {
                     amount = XXL * qty;
                     break;
             }
-            System.out.print("\nAmount : "+amount);
+            System.out.println("\nAmount : "+amount);
+            System.out.print("\nDo you want to place this order? (Y/N)");
+            char ch = input.next().charAt(0);
+
+            if (Character.toUpperCase(ch) == 'Y') {
+                extendArrays();
+                //Adding values to arrays
+                orderIdArray[orderIdArray.length-1]=orderId;
+                phoneNumberArray[phoneNumberArray.length-1] = phoneNumber;
+                sizeArray[sizeArray.length-1] = size;
+                qtyArray[qtyArray.length-1] = qty;
+                AmountArray[AmountArray.length-1] = amount;
+                statusArray[statusArray.length-1] = PROCCESSING;
+
+                System.out.println("\nOrder Placed Successfuly!");
+
+
+            }
+            System.out.print("\nDo you want to place another order? (Y/N)");
+            char choice = input.next().charAt(0);
+            clearConsole();
+            if(Character.toUpperCase(choice)=='Y'){
+                continue L1;
+            }else if(Character.toUpperCase(choice) == 'N'){
+                homePage();
+            }
 
         } while (true);
     }

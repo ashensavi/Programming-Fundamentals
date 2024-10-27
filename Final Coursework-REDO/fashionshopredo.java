@@ -65,6 +65,7 @@ class fashionshopredo {
         System.out.println("\n [6] Delete Order");
         System.out.print("Enter an option: ");
         int option = input.nextInt();
+        clearConsole();
 
         switch (option) {
             case 1:
@@ -128,13 +129,39 @@ class fashionshopredo {
         AmountArray = tempAmountArray;
         statusArray = tempStatusArray;
     }
+
+    public static int searchOrderByOrderId(String enteredOrderId){
+        for(int i=0;i<orderIdArray.length;i++){
+            if (orderIdArray[i].equals(enteredOrderId)) {
+                return i;
+            }
+          
+        }
+        return -1; // if the index is not there 
+    }
+
+    public static void printOrderDetails(int index) {
+        System.out.println("\nPhone Number : "+phoneNumberArray[index]);
+        System.out.println("\nSize : "+sizeArray[index]);
+        System.out.println("\nQty : "+qtyArray[index]);
+        System.out.println("\nAmount : "+AmountArray[index]);
+        if (statusArray[index]==0) {
+            System.out.println("\nStatus : Processing");
+        }else if(statusArray[index]==1){
+            System.out.println("\nStatus : Delivered");
+        }else{
+            System.out.println("\nStatus : Delivered");
+        }
+    }
+
     //=========PLACE ORDER=============
     public static void placeOrder(){
         L1:do {
             System.out.println("=============Place Order================");
             String orderId = generateId();
             System.out.println("\nEnter Order ID: "+orderId);
-           String phoneNumber;
+           
+            String phoneNumber;
            L2: do{
                 System.out.print("\nEnter Customer Phone Number: ");
                 phoneNumber = input.next();
@@ -223,6 +250,14 @@ class fashionshopredo {
 
                 System.out.println("\nOrder Placed Successfuly!");
 
+                //Checking whether the values inserted successfuly
+                System.out.println(Arrays.toString(orderIdArray));
+                System.out.println(Arrays.toString(phoneNumberArray));
+                System.out.println(Arrays.toString(sizeArray));
+                System.out.println(Arrays.toString(qtyArray));
+                System.out.println(Arrays.toString(AmountArray));
+                System.out.println(Arrays.toString(statusArray));
+
 
             }
             System.out.print("\nDo you want to place another order? (Y/N)");
@@ -239,12 +274,57 @@ class fashionshopredo {
 
 
     public static void searchCustomer(){
+        L5:do{
+            System.out.println("\n=====================Search Customer=========================");
+            System.out.println("\nEnter Customer Phone Number : ");
+            String enteredPhoneNumber = input.next();
+            boolean isValidPhoneNumber=validatePhoneNumber(enteredPhoneNumber);
 
+            if(isValidPhoneNumber){
+                break L5;
+            }
+            System.out.println("Invalid Phone Number!...Try Again!");
+            System.out.print("Do you want to enter phone number again? (Y/N)");
+            char ch = input.next().charAt(0);
+            if(ch == 'y' || ch == 'Y'){
+                 // Move the cursor up five lines 
+                 System.out.print("\033[6A"); 
+                 // Clear the lines 
+                 System.out.print("\033[0J");
+                 continue L5;
+            }else if(ch == 'n' || ch == 'N'){
+                clearConsole();
+                homePage();
+            }
+        }while(true);
     }
 
 
     public static void searchOrder(){
+        L4:do{
+            System.out.println("\n=====================Search Order=========================");
+            System.out.println("\nEnter Order ID : ");
+            String enteredorderId = input.next();
 
+            int index = searchOrderByOrderId(enteredorderId);
+            
+            if (index==-1) {
+                System.out.println("\nInvalid Order Id...");
+                
+            }else{
+                printOrderDetails(index);//passing index through this method to print the relavant details
+            }
+            System.out.print("\nDo you want to search another order? (Y/N)");
+            char ch = input.next().charAt(0);
+            clearConsole();
+
+            if(Character.toUpperCase(ch)=='Y'){
+                continue L4;
+            }else if(Character.toUpperCase(ch)== 'N'){
+                homePage();
+            }
+
+        }while(true);
     }
 
 

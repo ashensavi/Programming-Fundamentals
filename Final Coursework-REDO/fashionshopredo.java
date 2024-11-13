@@ -357,4 +357,8 @@ class fashionshopredo {
 
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 71bd2206736c363df6d3e181f441ca119601f734
